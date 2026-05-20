@@ -17,6 +17,9 @@ def compute_class_weights(dataset, device):
 
 def train(data_root, num_epochs=30, lr=1e-4, batch_size=64, dropout=0.3, finetune_mode="head_only", seed=42):
     
+    import os
+    os.makedirs('checkpoints', exist_ok=True)
+    
     set_seed(seed)
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
