@@ -84,7 +84,8 @@ def train(data_root, num_epochs=30, lr=1e-4, batch_size=64, dropout=0.3, finetun
             loss.backward()
             optimiser.step()
             
-            print(f"  Epoch {epoch} | batch {batch_idx+1}/{total_batches} | "
+            if (batch_idx + 1) % 50 == 0:
+                print(f"  Epoch {epoch} | batch {batch_idx+1}/{total_batches} | "
                       f"loss={loss.item():.4f}")
             
             train_loss += loss.item() * images.size(0)
