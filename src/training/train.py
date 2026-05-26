@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import shutil
 from torch.utils.data import DataLoader
 from src.data.dataset import stratified_splits
 from src.data.transforms import build_train_transform, build_eval_transform
@@ -135,7 +136,13 @@ def train(data_root, num_epochs=30, lr=1e-4, batch_size=64, dropout=0.3, finetun
                 "val_acc": val_acc,
                 "classes": train_ds.classes
             }, "checkpoints/resnet18_best.pt")
+            
+            drive_path = "/content/drive/MyDrive/resnet18_best.pt"
+            if os.path.exists("/content/drive/MyDrive"):
+                shutil.copy("checkpoints/resnet18_best.pt", drive_path)
+                print(f"  → Checkpoint backed up to Google Drive")
             print(f"  → New best val_acc={val_acc:.4f} — model saved")
+
         else:
             patience_counter += 1
             print(f"  → No improvement ({patience_counter}/{patience})")
